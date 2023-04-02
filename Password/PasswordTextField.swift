@@ -13,6 +13,8 @@ class PasswordTextField: UIView, UITextFieldDelegate {
     let textField = UITextField()
     let placeHolderText: String
     let eyeButton = UIButton(type: .custom)
+    let dividerView = UIView()
+    let errorLabel = UILabel()
     
     init (placeHolderText:String){
         self.placeHolderText=placeHolderText
@@ -26,7 +28,7 @@ class PasswordTextField: UIView, UITextFieldDelegate {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 200, height: 200)
+        return CGSize(width: 200, height: 60)
     }
 }
 
@@ -50,13 +52,25 @@ extension PasswordTextField {
         eyeButton.setImage(UIImage(systemName: "eye.circle"), for: .normal)
         eyeButton.setImage(UIImage(systemName: "eye.slash.circle"), for: .selected)
         eyeButton.addTarget(self, action: #selector(togglePasswordView), for: .touchUpInside)
+        
+        dividerView.translatesAutoresizingMaskIntoConstraints = false
+        dividerView.backgroundColor = .separator
+        
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        errorLabel.textColor = .systemRed
+        errorLabel.font = .preferredFont(forTextStyle: .footnote)
+        errorLabel.adjustsFontSizeToFitWidth=true
+        errorLabel.minimumScaleFactor=0.8
+        errorLabel.text = "Invalid password entered . Please enter your password again"
+        errorLabel.isHidden = false
     }
     
     func layout() {
         addSubview(lockImageView)
         addSubview(textField)
         addSubview(eyeButton)
-        
+        addSubview(dividerView)
+        addSubview(errorLabel)
         // lock
         NSLayoutConstraint.activate([
             lockImageView.topAnchor.constraint(equalTo: topAnchor),
@@ -72,6 +86,25 @@ extension PasswordTextField {
             eyeButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor),
             eyeButton.leadingAnchor.constraint(equalToSystemSpacingAfter: textField.trailingAnchor, multiplier: 1),
             eyeButton.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+        //CHCR
+        lockImageView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        textField.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
+        eyeButton.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        
+        //Divider
+        NSLayoutConstraint.activate([
+            dividerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            dividerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            dividerView.heightAnchor.constraint(equalToConstant: 1),
+            dividerView.topAnchor.constraint(equalToSystemSpacingBelow: textField.bottomAnchor, multiplier: 1)
+        ])
+        
+        // error
+        NSLayoutConstraint.activate([
+            errorLabel.topAnchor.constraint(equalTo: dividerView.bottomAnchor, constant: 4),
+            errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
         
     }
