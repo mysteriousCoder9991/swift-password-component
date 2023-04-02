@@ -9,7 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let newPasswordTextField = PasswordTextField()
+    let newPasswordTextField = PasswordTextField(placeHolderText: "Enter password")
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
