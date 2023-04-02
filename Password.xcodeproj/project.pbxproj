@@ -54,6 +54,7 @@
 		B76236BB29D95D1D00C2F91A /* Password */ = {
 			isa = PBXGroup;
 			children = (
+				B76236D329D9711F00C2F91A /* PasswordStatusView */,
 				B76236D029D95E2300C2F91A /* Files */,
 				B76236BC29D95D1D00C2F91A /* AppDelegate.swift */,
 				B76236C029D95D1D00C2F91A /* ViewController.swift */,
@@ -70,6 +71,13 @@
 				B76236CA29D95D1E00C2F91A /* Info.plist */,
 			);
 			name = Files;
+			sourceTree = "<group>";
+		};
+		B76236D329D9711F00C2F91A /* PasswordStatusView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = PasswordStatusView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

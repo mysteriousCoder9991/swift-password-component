@@ -36,7 +36,7 @@ extension PasswordTextField {
     
     func style() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .systemCyan
+//        backgroundColor = .systemCyan
         
         lockImageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -63,6 +63,10 @@ extension PasswordTextField {
         errorLabel.minimumScaleFactor=0.8
         errorLabel.text = "Invalid password entered . Please enter your password again"
         errorLabel.isHidden = false
+        /* Can use this also
+         errorLabel.numberOfLines = 0
+         errorLabel.lineBreakMode = .byWordWrapping
+         */
     }
     
     func layout() {
