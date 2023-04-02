@@ -6,8 +6,10 @@
 //
 
 import UIKit
-
-class PasswordTextField: UIView, UITextFieldDelegate {
+protocol PasswordTextFieldDelegate: AnyObject {
+    func editingChanged(_ sender: PasswordTextField)
+}
+class PasswordTextField: UIView {
     
     let lockImageView = UIImageView(image: UIImage(systemName: "lock.fill"))
     let textField = UITextField()
@@ -22,6 +24,7 @@ class PasswordTextField: UIView, UITextFieldDelegate {
         style()
         layout()
     }
+    weak var delegate: PasswordTextFieldDelegate?
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -36,17 +39,21 @@ extension PasswordTextField {
     
     func style() {
         translatesAutoresizingMaskIntoConstraints = false
-//        backgroundColor = .systemCyan
+        //        backgroundColor = .systemCyan
         
         lockImageView.translatesAutoresizingMaskIntoConstraints = false
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.isSecureTextEntry = false // true
         textField.placeholder = placeHolderText
-        //textField.delegate = self
+        textField.delegate = self
         textField.keyboardType = .asciiCapable
+        
         textField.attributedPlaceholder = NSAttributedString(string:placeHolderText,
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel])
+        // Extra interaction
+        textField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+        
         
         eyeButton.translatesAutoresizingMaskIntoConstraints = false
         eyeButton.setImage(UIImage(systemName: "eye.circle"), for: .normal)
@@ -62,7 +69,7 @@ extension PasswordTextField {
         errorLabel.adjustsFontSizeToFitWidth=true
         errorLabel.minimumScaleFactor=0.8
         errorLabel.text = "Invalid password entered . Please enter your password again"
-        errorLabel.isHidden = false
+        errorLabel.isHidden = true
         /* Can use this also
          errorLabel.numberOfLines = 0
          errorLabel.lineBreakMode = .byWordWrapping
@@ -120,4 +127,12 @@ extension PasswordTextField {
         textField.isSecureTextEntry.toggle()
         eyeButton.isSelected.toggle()
     }
+    @objc func textFieldEditingChanged(_ sender: UITextField) {
+        print("Extra - textFieldEditingChanged: \(sender.text)")
+        delegate?.editingChanged(self) // add
+    }
+}
+
+extension PasswordTextField: UITextFieldDelegate {
+    
 }

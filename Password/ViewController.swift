@@ -26,7 +26,7 @@ class ViewController: UIViewController {
 extension ViewController {
     func style() {
         newPasswordTextField.translatesAutoresizingMaskIntoConstraints = false
-        
+        newPasswordTextField.delegate=self
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -57,5 +57,12 @@ extension ViewController {
         
         
         
+    }
+}
+extension ViewController: PasswordTextFieldDelegate {
+    func editingChanged(_ sender: PasswordTextField) {
+        if sender === newPasswordTextField {
+             statusView.updateDisplay(sender.textField.text ?? "")
+        }
     }
 }
