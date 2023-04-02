@@ -10,6 +10,10 @@ import UIKit
 class ViewController: UIViewController {
     let stackView = UIStackView()
     let newPasswordTextField = PasswordTextField(placeHolderText: "Enter password")
+    //    let criteriaView = PasswordCriteriaView(text: "uppercase letter (A-Z)")
+    let statusView=PasswordStatusView()
+    let confirmPasswordTextField=PasswordTextField(placeHolderText: "Enter confirm password")
+    let resetButton = UIButton(type: .system)
     
     
     override func viewDidLoad() {
@@ -26,10 +30,22 @@ extension ViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
+        
+        //        criteriaView.translatesAutoresizingMaskIntoConstraints = false
+        statusView.translatesAutoresizingMaskIntoConstraints = false
+        
+        confirmPasswordTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        resetButton.translatesAutoresizingMaskIntoConstraints = false
+        resetButton.configuration = .filled()
+        resetButton.setTitle("Reset password", for: [])
     }
     
     func layout() {
         stackView.addArrangedSubview(newPasswordTextField)
+               stackView.addArrangedSubview(statusView)
+               stackView.addArrangedSubview(confirmPasswordTextField)
+               stackView.addArrangedSubview(resetButton)
         
         view.addSubview(stackView)
         
@@ -38,5 +54,8 @@ extension ViewController {
             stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2)
         ])
+        
+        
+        
     }
 }
